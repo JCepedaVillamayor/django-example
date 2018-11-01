@@ -5,7 +5,7 @@ services:
     image: django_example_dev
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./compose/local/Dockerfile
     command: python manage.py runserver
     volumes:
       - .:/code
