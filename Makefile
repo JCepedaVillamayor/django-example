@@ -7,6 +7,14 @@ clean:
 test:
 	docker-compose run web pytest
 
+generate-sample-envs:
+	mkdir .envs
+	touch .envs/.web
+	touch .envs/.db
+	echo "POSTGRES_USER=sample" >> .envs/.db
+	echo "POSTGRES_PASSWORD=sample" >> .envs/.db
+	echo "SECRET_KEY=secret" >> .envs/.web
+	echo "DJANGO_SETTINGS_MODULE=config.settings.local" >> .envs/.web
 
 change-permissions:
 	find . -exec sudo chown $(USER):$(USER) {} \;
