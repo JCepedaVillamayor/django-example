@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django_example.addresses.views import AddressView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("", AddressView.as_view(), name="address_listing"),
+    path("admin/", admin.site.urls),
 ]
