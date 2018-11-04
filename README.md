@@ -50,3 +50,19 @@ POSTGRES_DB=sample
 ```
 
 It is recommended to change the values and put your own ones, because they are insecure since they are visible
+
+## Production
+
+If you want to deploy the application, there is a configuration file called `prod.yml` with:
+
+- Setup for NGINX server
+- Setup for serving static and media files
+- Setup for gunicorn server (we are executing the Django application here)
+
+It is needed to perform the following steps to successfully deploy the application:
+
+1. Generate env variables, with `make generate-sample-envs`
+2. Change the variables so we app is more secure
+3. Build everything with `docker-compose -f prod.yml build`
+4. Collect static files with `docker-compose -f prod.yml run web python manage.py collectstatic`, so NGINX server can serve them
+5. Start the application with `docker-compose -f prod.yml up`
