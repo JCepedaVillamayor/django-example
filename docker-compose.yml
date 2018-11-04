@@ -13,5 +13,10 @@ services:
       - 8000:8000
     depends_on:
       - db
+    env_file:
+      - ./.envs/.web
+      - ./.envs/.db
   db:
     image: postgres:11
+    env_file:
+      - ./.envs/.db
