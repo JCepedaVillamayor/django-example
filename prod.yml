@@ -1,0 +1,44 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: ngx01
+    ports:
+      - 80:80
+    volumes:
+      - ./static:/static/
+      - ./compose/nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
+    networks:
+      - nginx_network
+
+  web:
+    hostname: web
+    image: django_example_dev
+    build:
+      context: .
+      dockerfile: ./compose/prod/Dockerfile
+    command: /start.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    env_file:
+      - ./.envs/.web
+      - ./.envs/.db
+    networks:
+      - nginx_network
+      - db_network
+  db:
+    image: postgres:11
+    env_file:
+      - ./.envs/.db
+    networks:
+      - db_network
+
+networks:  # <-- and here
+  nginx_network:
+    driver: bridge
+  db_network:
+    driver: bridge
